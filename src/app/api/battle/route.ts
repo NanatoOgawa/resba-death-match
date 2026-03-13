@@ -44,8 +44,7 @@ export async function POST(req: Request) {
     const { action, userPost, enemyPost, userCounter } = await req.json();
 
     if (action === "generate_kuso") {
-      // クォータが利用可能な 'gemini-flash-latest' (Gemini 3 Flash) を使用
-      const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
       const prompt = `
         あなたはネット上の「クソリプラー」です。
         以下のユーザーの投稿に対して、非常に不快で、揚げ足取りで、皮肉たっぷりな「クソリプ」を1つ生成してください。
@@ -69,7 +68,7 @@ export async function POST(req: Request) {
       // クォータが利用可能な 'gemini-2.5-flash' を使用
       // スキーマ出力により、構造化された判定を確実に取得
       const model = genAI.getGenerativeModel({ 
-        model: "gemini-2.0-flash-exp",
+        model: "gemini-1.5-flash",
         generationConfig: {
           responseMimeType: "application/json",
           responseSchema: judgmentSchema,
