@@ -130,7 +130,7 @@ body {
 }
 
 .btn-tactical-blue {
-  @extend .btn-tactical;
+  @apply .btn-tactical;
   border: 1px solid var(--battle-blue);
   background: rgba(0, 242, 255, 0.05);
   color: var(--battle-blue);
@@ -145,7 +145,7 @@ body {
 }
 
 .btn-tactical-red {
-  @extend .btn-tactical;
+  @apply .btn-tactical;
   border: 1px solid var(--battle-red);
   background: rgba(255, 0, 60, 0.05);
   color: var(--battle-red);

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 
 export default function Round3_Counter({ 
+  userPost,
   enemyPost, 
   onNext 
 }: { 
