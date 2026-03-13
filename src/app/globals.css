@@ -1,0 +1,185 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #02040a;
+  --foreground: #ffffff;
+  --battle-red: #ff003c;
+  --battle-blue: #00f2ff;
+  --battle-yellow: #f3ff00;
+  
+  --glass: rgba(255, 255, 255, 0.02);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --hud-panel-bg: rgba(5, 10, 20, 0.8);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), sans-serif;
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* 
+   PREMIUM VISUAL SYSTEM
+   Multi-layered depth: Mesh -> Grid -> Scanlines -> CRT
+*/
+
+.bg-mesh {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background: radial-gradient(circle at 20% 20%, rgba(0, 242, 255, 0.08) 0%, transparent 40%),
+              radial-gradient(circle at 80% 80%, rgba(255, 0, 60, 0.08) 0%, transparent 40%),
+              radial-gradient(circle at 50% 50%, rgba(10, 10, 30, 1) 0%, transparent 100%);
+  filter: blur(80px);
+}
+
+.cyber-grid {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image: 
+    linear-gradient(rgba(0, 242, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 242, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  background-position: center center;
+  mask-image: radial-gradient(circle, black 40%, transparent 100%);
+}
+
+.scanlines {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%);
+  background-size: 100% 4px;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* Professional Typography Hierarchy */
+.font-bangers { font-family: var(--font-bangers), cursive !important; }
+.font-orbitron { font-family: var(--font-orbitron), sans-serif !important; }
+.font-inter { font-family: var(--font-inter), sans-serif !important; }
+
+/* 
+   3-COLUMN HUD SYSTEM
+*/
+
+.hud-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr 280px;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  height: calc(100vh - 120px);
+}
+
+@media (max-width: 1280px) {
+  .hud-layout {
+    grid-template-columns: 220px 1fr 220px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .hud-layout {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+  .hud-side-panel { display: none; }
+}
+
+.hud-side-panel {
+  background: var(--hud-panel-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hud-side-panel::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 4px;
+  background: linear-gradient(90deg, var(--battle-blue), transparent);
+  opacity: 0.3;
+}
+
+/* Interactive Components */
+.glass-card {
+  background: var(--glass);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
+  border-radius: 1.5rem;
+}
+
+.btn-tactical {
+  @apply relative overflow-hidden flex items-center justify-center font-black italic tracking-widest transition-all;
+  border-radius: 0.75rem;
+  text-transform: uppercase;
+}
+
+.btn-tactical-blue {
+  @extend .btn-tactical;
+  border: 1px solid var(--battle-blue);
+  background: rgba(0, 242, 255, 0.05);
+  color: var(--battle-blue);
+  box-shadow: 0 0 20px rgba(0, 242, 255, 0.1);
+}
+
+.btn-tactical-blue:hover:not(:disabled) {
+  background: var(--battle-blue);
+  color: #000;
+  box-shadow: 0 0 40px var(--battle-blue);
+  transform: translateY(-2px);
+}
+
+.btn-tactical-red {
+  @extend .btn-tactical;
+  border: 1px solid var(--battle-red);
+  background: rgba(255, 0, 60, 0.05);
+  color: var(--battle-red);
+  box-shadow: 0 0 20px rgba(255, 0, 60, 0.1);
+}
+
+.btn-tactical-red:hover:not(:disabled) {
+  background: var(--battle-red);
+  color: #fff;
+  box-shadow: 0 0 40px var(--battle-red);
+  transform: translateY(-2px);
+}
+
+/* Animations */
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.95; }
+}
+
+.animate-flicker {
+  animation: flicker 0.1s infinite;
+}
+
+@keyframes glitch-skew {
+  0%, 100% { transform: skew(0); }
+  20% { transform: skew(5deg); }
+  40% { transform: skew(-5deg); }
+}
+
+.hud-label {
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  font-family: var(--font-orbitron);
+}
