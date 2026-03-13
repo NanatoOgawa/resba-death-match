@@ -7,27 +7,27 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 // 判定用のスキーマ定義
 const judgmentSchema = {
   description: "Battle judgment result",
-  type: SchemaType.OBJECT,
+  type: SchemaType.OBJECT as any,
   properties: {
     result: {
-      type: SchemaType.STRING,
+      type: SchemaType.STRING as any,
       enum: ["WIN", "LOSE", "DRAW"],
       description: "Final result of the battle",
     },
     score_logic: {
-      type: SchemaType.NUMBER,
+      type: SchemaType.NUMBER as any,
       description: "Score for logical strength (0-100)",
     },
     score_aori: {
-      type: SchemaType.NUMBER,
+      type: SchemaType.NUMBER as any,
       description: "Score for provocation/sarcasm (0-100)",
     },
     score_margin: {
-      type: SchemaType.NUMBER,
+      type: SchemaType.NUMBER as any,
       description: "Score for emotional composure (0-100)",
     },
     judge_comment: {
-      type: SchemaType.STRING,
+      type: SchemaType.STRING as any,
       description: "Concise, sharp, and funny comment from the AI judge",
     },
   },
@@ -69,7 +69,7 @@ export async function POST(req: Request) {
       // クォータが利用可能な 'gemini-2.5-flash' を使用
       // スキーマ出力により、構造化された判定を確実に取得
       const model = genAI.getGenerativeModel({ 
-        model: "gemini-2.5-flash",
+        model: "gemini-2.0-flash-exp",
         generationConfig: {
           responseMimeType: "application/json",
           responseSchema: judgmentSchema,
